@@ -1,0 +1,11 @@
+# install uv 
+pip install uv 
+
+
+2. create a new folder 
+
+3. Open folder in VScode 
+
+4. uv init
+
+5. uv add langchain langchain-openai langchain-mcp-adapters python-dotenv streamlit

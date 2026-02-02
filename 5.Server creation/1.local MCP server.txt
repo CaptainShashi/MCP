@@ -1,0 +1,72 @@
+MCP is a protocol ===== set of rules
+
+1. complex   :: bringing all protocols and rules and build a server is a complex task
+2. Redundant :: Suppose if we want to create 2 server , to do that we have to repeat same set of rules which is not a sign of a good programmer 
+
+Two libraries to build MCP server 
+    1. MCP SDk 
+    2. FastMCP
+
+
+1. Birth of MCP ( 2023 - 2014)
+        . Anthropic introduces Model Context protocol ( MCP )
+        . Structured communication between LLMs and external tools and data
+
+        -> Early needs :
+                . Build MCP servers (tools/resources/prompts)
+                . Build MCP client (app consuming these servers )
+        
+        -> official Python SDK 
+                . mcp.server ---> build servers 
+                . mcp.client ---> build clients
+                . mcp.cli    ---> CLI for debugging/testing
+        
+        these becomes the reference of implementation
+
+    
+2. Developer Friction & FastMCP 1.x ( 2024 )
+        -> problem  :: Raw SDK = verbose and boiler plate heavy 
+                . manual list_tools, call_tools, list_prompts etc...
+                . explicit schema definition required
+                . see for code in SDK_code.py file in same folder . code is too heavy for a simple task and its not a beginner friendly task
+        
+        -> Solution :: FastMCP helper inside SDK (mcp.server.fastmcp)
+        -> Decoder-driven , Type hint answer 
+         code ::
+                from mcp.server.fastmcp import FastMCP
+                mcp = FastMCP()
+                @mcp.tool()
+                def add(a:int,b:int) -> int:
+                        return a+b 
+                
+        -> popular for teaching and prototyping 
+
+
+3. FastMCP breaks out ( 2025 )
+        -> FastMCP adoption grown rapidly 
+        -> SDK maintainers goals 
+                . Keep SDK minimal and specs focused
+                . Let FastMCP evolve faster ( QoL, APIs, transports, Integrations )
+        
+        -> FastMCP 2.x released as a standalone package 
+                pip install fastmcp        ( this wil download only fastmcp not SDK )
+                from fastmcp import FastMCP
+                mcp = FastMCP()
+        
+        -> Highly compatable with 1.x but may diverge over time 
+
+
+5. Where things stand ( late 2025 )
+        -> MCP SDK ( mcp )
+                . official spec-compliance , stable
+                . install : pip install mcp[cli]
+        
+        -> MCP CLI ( mcp )
+                . ships with SDK 
+                . Inspect, debug and test servers 
+
+        -> FastMCP 2.x ( fastmcp )
+                . Standalone , community driven , fast evolving 
+                . ideal for students , educators, standard prototypes
+                . Not officialreference but more ergonomic 
+                

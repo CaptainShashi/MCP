@@ -1,0 +1,84 @@
+################ What is MCP Life Cycle 
+--> The MCP Life Cycle describes the complete sequence of steps that governs hiw a HOST(Client) and SERVER establish,use and end a connection during a session
+
+
+##### Stages of MCP Life Cycle
+
+                            MCP Life Cycle
+                         /        |       \
+                        /         |         \
+                       /          |          \
+                      /           |           \
+                      /           |            \
+                     /            |             \
+                     /            |              \
+                    /             |               \
+            Initialization      operations      Shut Down
+
+
+######## Initialization Phase ::
+       it Must be the first interaction between CLIENT and SERVER
+       1. Check for MCP version compatablility
+       2. CLIENT and SERVER exchange and negotiate compatablilities 
+
+1. Initialization phase 1 ::
+    the client send an Initialization request that contains 
+    {
+        "jsonrpc" : "2.0",
+        "id"      : 1,
+        "method"  : "initialize",
+        "params"  : {
+            "Protocolversion" : "2025-03-26",                          # sending version 
+            "capabilities" :{                                          # Client sending capabilities
+                "roots" :{"ListChanged":true},                         # can ive access to host directory
+                "sampling":{}
+            },
+            "clientInfo":{"name" : "IDEPlugin". "version" : 1.0.0}     # client implementation information
+        }
+    }
+
+
+2. Initialization phase 2 ::
+    the server sends its initialization response, telling the client
+            1.which MCP protocol version it supports
+            2. what capabilities it provides
+            3. its implementation details
+
+    {
+    "jsonrpc" : "2.0",
+    "id"      : 1,
+    "result"  : {
+        "protocolVersion" : "2025-03-26",                 # MCP protocol version supported by server
+        "capabilities" : {                                # Server supported capabilities
+            "tools" : {
+                "listChanged" : true                      # server can notify when tool list changes
+            },
+            "resources" : {
+                "listChanged" : true,                     # server can notify when resources change
+                "subscribe"   : true                      # client can subscribe to resource updates
+            }
+        },
+        "serverInfo" : {                                  # Server implementation information
+            "name"    : "FileSystemServer",
+            "version" : "2.5.1"
+        },
+        "instructions" : "Server is ready to accept commands"
+                                                          # Optional human-readable message
+    }
+}
+
+
+
+3. Initialization phase 3 ::
+        after the server successfully responds to the initialize request,
+        the client MUST send an initialized notification to confirm that
+        it is ready to begin normal operations.
+
+        {
+            "jsonrpc" : "2.0",
+            "method"  : "notifications/initialized"
+        }
+
+
+###### Important Rules ::
+The client should not send request other than pings before the server responded to the initialize request 

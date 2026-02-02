@@ -1,0 +1,100 @@
+primitives :: the things that a server can offer to Host
+ 1. Tools 
+ 2. Resources
+ 3. Prompts
+
+
+MCP  PREMITIVES
+     
+1. Tools     :: Actions that an AI ask the server to perform
+2. Resources :: structured data sources that the AI can read 
+3. Prompts   :: predefined prompt templates or instructions that a server offers to help shape the AI's behaviour
+
+
+MCP DATA LAYERS 
+
+data layer ::  the data layer is the language and grammer of theMCP ecosystem that everyobe agrees upon to communicate 
+
+in MCP , JSON RPC 2.0 server as the foundation of data layers 
+
+
+
+JSON RPC 2.0  :: JavaScript Object Notation Remote Procedure Call 
+
+--> RPC ( a Remote Procedure Call ) :: allows a programme to execute a function on another computer as if it were local 
+                                    hiding the details of network communications and data transfer. this obstruction makes it easier to build 
+                                    distributed applications
+
+                                    ex :: Instead of writing add(2,3) locally you can send a request to a server saying "please run add with parameters 2 and 3
+
+
+---> JSON RPC :: combines the concepts of remote procedure calls with the Simplifying of JSON, Allowing develoopers to structures RPC requests and response in a structured JSON format
+
+
+               JSON
+            /
+JSON RPC /
+        \
+          \
+            \  RPC 
+
+
+ --> Request structure
+  {                                                                         id for matching both request and response 
+    "jsonrpc" : "2.0",
+    "method"  : "add",
+    "params"  : [2,3],
+    "id"      : 1
+  }
+
+ 
+ --> Response structure
+ {
+    "jsonrpc" : "2.0",
+    "result"  : 5,
+    "id"      : 1
+ }
+
+ ### If method doesnt matching then we get the response as 
+ {
+    "jsonrpc" : "2.0",
+    "error"   : {
+        "code"    : -32600,
+        "message" : "Method not found"
+    },
+    "id"      : 1
+ }
+
+
+ ##########  why JSON RPC  for Data Layers ::
+
+ 1. Light weight :: in normal Rest api if we try calling another system function from our system we need to call it usin HTTP request , in HTTP request there is a lot of metadata involved so its time taking and costly
+                    JSON RPC is easy maintained , easy written 
+
+ 2. Bi Directional communication ::Rest API is one way communication but JSON RPC is bidirectional you can also sent request from server to client and client to server 
+
+ 3. Transport Agnostic :: Rest api HTTP needed , in JSON RPC its flexible for HTTP, stdio,websockets  we can even create custom one 
+
+ 4. Supports batching  :: Rest API one request at a time 
+                          We cam send multiple request to server
+ 5. Supports Notification :: Rest API dont support notification
+                             JSON RPC can support Notification
+
+
+
+##################  MCP transport Layer
+--> The transport layer is the mechanism that moves JSON-RPC messages between Client and Server
+    The choice of transfer depends on the type of server 
+
+
+
+#################### MCP - type of Servers
+ 
+                  Local Server   ( the programme running on your own(host) computer)
+               /        ( STDIO )
+              /
+ MCP server 
+            \
+              \
+                \  Remote Server  (The programme running on another computer, that you connect over a network) 
+                       ( HTTP/ SSE )

@@ -1,0 +1,67 @@
+--> Model Context Protocol (MCP) is a standardized framework developed by Anthropic and was introduced in November 2024
+--> It enables AI models to seamlessly connect with external tools and data sources without requiring custom integrations for each platform
+--> By serving as a universal protocol, MCP ensures that AI applications can access real-time, contextually relevant data in a secure, scalable and efficient way
+
+1. Unified Connectivity: 
+        MCP standardizes the communication layer between AI systems and data sources, removing the need for repetitive, service-specific integrations
+
+2. Real-Time Access: 
+        It enables AI models to utilize the most up-to-date information, enhancing accuracy and decision-making
+
+3. Simplified Integration: 
+        Developers can integrate MCP with minimal setup, improving scalability and reducing time-to-deploy
+
+4. Cross-Industry Impact: 
+        From enterprise workflows to healthcare and customer support, MCP supports a wide range of AI-powered use cases
+
+
+--> MCP's architecture is designed to be both simple and flexible which helps in enabling good interaction between AI models and various data sources
+
+--> It works by connecting three key components: MCP Servers, MCP Clients and MCP Hosts
+
+3 components of MCP 
+ 
+1. MCP Servers
+        External service that executes actions or provides data based on client requests
+        Transforms structured user queries into server-side operations, enabling LLMs to access data and tools
+        Servers can also connect to LLM inference platforms (e.g., IBM, OpenAI) through the MCP SDK, exposing them as standardized, reusable chat services
+        Integration examples :: Slack, GitHub, Git, Docker, web search engines.
+        Versatility  :: MCP servers support both internal resources (databases, files) and external services (APIs, cloud tools
+
+
+        MCP servers expose data through  ::
+                Resources :: Fetch information from internal or external databases (returns data only, no computation).
+                Tools     :: Connect with APIs or systems that can perform side effects such as calculations, queries or data actions.
+                Prompts   :: Provide reusable workflows and structured templates that standardize LLM-to-server communication.
+
+
+2. MCP Clients
+        Acts as the communication bridge between the host and server.
+        Converts user requests into structured MCP protocol messages that servers can process.
+        A host can contain multiple clients, but each client has a dedicated 1:1 connection to one server.
+        MCP clients also manage sessions, including handling interruptions, timeouts, reconnections and closures.
+        Clients parse responses, perform error handling and verify that outputs remain relevant to the given context.
+
+
+
+3. MCP Hosts
+        The integration layer where the user interacts with the AI application.
+        Examples include Claude Desktop, Cursor IDE and other AI-enabled interfaces.
+        Hosts contain the orchestration logic needed to connect multiple clients with multiple servers
+        They handle coordination, manage workflows and ensure that requests flow correctly between clients and servers.
+
+    
+
+Use of MCP in Agent Workflow
+        When building AI agents, there are usually three types of context they need to handle:
+            1. Ephemeral turn context  :: This is the current prompt and any notes retrieved during that interaction. It is temporary and discarded after the task is done.
+            2. Session or task context :: This is information that lasts throughout a multi-step process, like to-do lists or temporary files used during a job.
+            3. Long-term memory        :: These are permanent facts and data related to a user or workspace that the agent can remember and use over time.
+
+
+
+MCP helps manage all these different types of context clearly and efficiently by:
+        Exposing memory through MCP tools or resources, such as search and update functions (memory.search, memory.upsert) or URLs like resource:/memory/<userId>.
+        Allowing multiple agents or applications to connect to the same memory server, so they can share and reuse context easily.
+        Providing centralized control through authentication, access permissions and auditing to keep shared context secure and well-managed.
+        

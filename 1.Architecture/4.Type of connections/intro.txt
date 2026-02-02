@@ -1,0 +1,29 @@
+Type of connections ::
+    using config file   --- like json
+    using connectors
+
+
+Q). what are connectors ? 
+        --> A connector is a built in feature that links Claude to MCP server automatically, without the need of manual setup or configuration
+             ( dont need to edit in any configuration file )
+
+        --> Most Claude desktop users are non technical end users who just want Claude to "talk" to their apps like drive,slack,githu etc...
+        --> they dont want to run servers , edit JSON or worry about transports
+        --> the connector system wraps an MCP server behind the scenes and handle authentication via OAuth 
+        --> they make things easy, safe and consistant 
+
+        --> think of connector as "APP store" for MCP server - user friendly , click based , pre curated 
+
+
+Q) Why not using connectors always instead of JSON editing ?
+        1. Connectors are curated and managed 
+               - connectors are officially built, hosted and maintained by Anthropic 
+               - its impossible to make connectors for everything thats why Anthropic made for very few important one like Gmail , Slack , Drive
+               - they come with OAuth login flows, managed security , rate limits and guarenteed security 
+               - if every MCP server would require to be a connector, it would mean Anthropic has to review, host and maintain every possible server - which doesnt scale 
+        
+        2. MCP is open standard
+               - MCP is designed so anyone can write a server 
+               - Forcing everything to connectors would close the ecosystem and make you dependent on Anthropic to approve or publish servers
+            ( in simple ):: every connectors you create that has to be reviewed by Anthropic team which is a dependent on Anthropic, so that is why we use both connectors and JSON edit mostly 
+            

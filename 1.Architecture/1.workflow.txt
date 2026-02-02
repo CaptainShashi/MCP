@@ -1,0 +1,26 @@
+APPROACH -- 1.
+
+    1. Simplest Version
+        Host  and Server 
+            Host ( like chatbot ) - where a user interacts
+            Server ( where you want data from )  ex : GitHub , Slcak , Drive , etc
+
+        example ::
+            suppose a user asks a question( Are there any commits on my GitHub ) to Host  --->Host ask LLM --> LLM dont know the answer it says " i dont know the answer go and ask github" ---->Host asks github -----> github looks at comits and send a list of commits back to Host -------> Host passes the list of commits passed bu github back to LLM ----> LLM provides response again back to Host ---> user see it 
+
+
+But in reality Host doesn't directly connect with Server  it require a Client 
+
+APPROACH --2. INCLUDING A CLIENT 
+
+    user ask ("Are there any commits on my GitHub ") to Host ---> Host prepares a highlevel request ---> Host passes the request to Client --> client converts this highlevel request to MCP compatable request and send to server ---> Server provides a structures MCP response to Client ----> Client translate the response into a understandable language to Host
+
+    --> Client and Server has one on one relation 
+        i.e one client can connects to one server 
+            Suppose if the Host need different server there should be an extra Client and so on..
+
+     Benefits ::
+        1. De-coupling :: Seperation of concerns . each server has seperate and independed response to another server ( safety mattered )
+        2. Parallelism :: Seperate parallel task can be done at a time as different client with different server 
+        3. scalability :: we can connect with any no of servers with a single host 
+        
